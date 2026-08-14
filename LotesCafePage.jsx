@@ -7,16 +7,20 @@ const [lotes, setLotes] = useState([]);
  
 useEffect(() => {
 async function carregarLotes() {
+try {
 const querySnapshot = await getDocs(
 collection(db, "lotes_cafe")
 );
  
-const dados = querySnapshot.docs.map(doc => ({
+const lista = querySnapshot.docs.map((doc) => ({
 id: doc.id,
-...doc.data()
+...doc.data(),
 }));
  
-setLotes(dados);
+setLotes(lista);
+} catch (error) {
+console.error("Erro ao carregar lotes:", error);
+}
 }
  
 carregarLotes();
@@ -30,13 +34,16 @@ return (
  style={{
  width: "100%",
  background: "#fff",
- borderCollapse: "collapse"
+ borderCollapse: "collapse",
  }}
  >
 <thead>
 <tr>
 <th>Código</th>
 <th>Propriedade</th>
+<th>Bebida</th>
+<th>Sacas</th>
+<th>Safra</th>
 </tr>
 </thead>
  
@@ -45,6 +52,9 @@ return (
 <tr key={lote.id}>
 <td>{lote.codigo}</td>
 <td>{lote.propriedade}</td>
+<td>{lote.bebida}</td>
+<td>{lote.sacas}</td>
+<td>{lote.safra}</td>
 </tr>
 ))}
 </tbody>
