@@ -1,4 +1,4 @@
-JSX
+
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
  
 import DashboardPage from "./DashboardPage";
