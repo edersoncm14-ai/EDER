@@ -49,4 +49,6 @@ Análise de Solo
  
 <Routes>
 <Route path="/" element={<DashboardPage />} />
- <Route path="/lotes" element
+<Route path="/lotes" element={<LotesCafePage />} />
+<Route path="/solo" element={<AnaliseSoloPage />} />
+ </Routes
