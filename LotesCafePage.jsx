@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "./firebase";
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+  serverTimestamp,
+} from "firebase/firestore";
 
 export default function LotesCafePage() {
   const [form, setForm] = useState({
@@ -14,6 +19,7 @@ export default function LotesCafePage() {
     quantidade: "",
     observacoes: ""
   });
+const [lotes, setLotes] = useState([]);
 
   const handleChange = (e) => {
     setForm({
@@ -21,6 +27,24 @@ export default function LotesCafePage() {
       [e.target.name]: e.target.value
     });
   };
+const carregarLotes = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, "lotesCafe"));
+
+    const dados = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    setLotes(dados);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+useEffect(() => {
+  carregarLotes();
+}, []);
 
   const salvarLote = async (e) => {
     e.preventDefault();
@@ -31,6 +55,7 @@ export default function LotesCafePage() {
         quantidade: Number(form.quantidade),
         criadoEm: serverTimestamp()
       });
+await carregarLotes();
 
       alert("Lote cadastrado com sucesso!");
 
@@ -117,6 +142,46 @@ export default function LotesCafePage() {
           Salvar Lote
         </button>
       </form>
+   <hr />
+
+<h3>Lotes Cadastrados</h3>
+
+<table
+  border="1"
+  cellPadding="8"
+  style={{
+    width: "100%",
+    borderCollapse: "collapse",
+    marginTop: "10px"
+  }}
+>
+  <thead>
+    <tr>
+      <th>Código</th>
+      <th>Produtor</th>
+      <th>Fazenda</th>
+      <th>Talhão</th>
+      <th>Variedade</th>
+      <th>Safra</th>
+      <th>Sacas</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {lotes.map((lote) => (
+      <tr key={lote.id}>
+        <td>{lote.codigo}</td>
+        <td>{lote.produtor}</td>
+        <td>{lote.fazenda}</td>
+        <td>{lote.talhao}</td>
+        <td>{lote.variedade}</td>
+        <td>{lote.safra}</td>
+        <td>{lote.quantidade}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
     </div>
   );
 }
