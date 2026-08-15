@@ -8,6 +8,8 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
+import { db } from "./firebase";
+
 export default function LotesCafePage() {
   const [form, setForm] = useState({
     codigo: "",
