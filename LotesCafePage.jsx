@@ -40,7 +40,7 @@ export default function LotesCafePage() {
 
       setLotes(dados);
     } catch (error) {
-      console.error(error);
+      console.error("Erro ao carregar lotes:", error);
     }
   };
 
@@ -73,7 +73,7 @@ export default function LotesCafePage() {
         observacoes: "",
       });
     } catch (error) {
-      console.error(error);
+      console.error("ERRO FIREBASE:", error);
       alert(error.message);
     }
   };
@@ -88,7 +88,7 @@ export default function LotesCafePage() {
           display: "flex",
           flexDirection: "column",
           gap: "10px",
-          maxWidth: "500px",
+          maxWidth: "600px",
         }}
       >
         <input
@@ -153,7 +153,7 @@ export default function LotesCafePage() {
         <button
           type="submit"
           style={{
-            background: "#1b5e20",
+            backgroundColor: "#1b5e20",
             color: "#fff",
             border: "none",
             padding: "10px",
@@ -175,7 +175,6 @@ export default function LotesCafePage() {
         style={{
           width: "100%",
           borderCollapse: "collapse",
-          marginTop: "10px",
         }}
       >
         <thead>
